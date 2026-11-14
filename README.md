@@ -18,5 +18,6 @@ cd src
 npx -y staticrypt@3 index.html analysis.html -d .. -p "<閲覧用パスワード>" --remember 30
 ```
 
-解析ビジュアルのデータは `extract_analysis_1115.py`（セッションの scratchpad）で
-yosou_tool.html の DATA と jvlink.sqlite から抽出した JSON をテンプレートに埋め込んで生成します。
+解析ビジュアルは `src/tools/extract_analysis_1115.py` で yosou_tool.html の DATA と
+jvlink.sqlite から JSON を抽出し、`src/tools/analysis_template.html` の `__DATA__` に
+埋め込んで `src/analysis.html` を生成します（対象日を変える場合は TARGET/MD を書き換え）。
