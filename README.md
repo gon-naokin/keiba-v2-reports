@@ -21,3 +21,18 @@ npx -y staticrypt@3 index.html analysis.html -d .. -p "<閲覧用パスワード
 解析ビジュアルは `src/tools/extract_analysis_1115.py` で yosou_tool.html の DATA と
 jvlink.sqlite から JSON を抽出し、`src/tools/analysis_template.html` の `__DATA__` に
 埋め込んで `src/analysis.html` を生成します（対象日を変える場合は TARGET/MD を書き換え）。
+
+## レース結果の反映
+
+- 手動: 解析ページ各レースの「結果の記録」に1〜3着の馬番を入力して保存（ブラウザ保存）
+- 自動: 確定結果を取り込んだ後、以下を実行して push すると、
+  ページの「公式結果を一括取得」ボタンで全レースに反映されます
+
+```bash
+python src/tools/make_results.py
+git add results_1115.json
+git commit -m "data: 結果更新"
+git push
+```
+
+`results_*.json` は公開ファイルです（JRAの公式確定結果のみで、予想内容は含まれません）。
