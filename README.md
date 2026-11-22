@@ -5,7 +5,7 @@ v2序列モデルによる競馬予想サマリーの公開ページです。
 - 公開ページ: GitHub Pages（`index.html`=予想サマリー、`analysis.html`=解析ビジュアル、
   `results.html`=結果まとめ）
 - **閲覧にはパスワードが必要です**（StatiCrypt による AES-256 クライアントサイド暗号化）
-- 現在の掲載内容: 2026年11月22日（東京・京都）の予想サマリーと、
+- 現在の掲載内容: 2026年11月23日（福島・東京）の予想サマリーと、
   出馬表・脚質/展開・コース適性・騎手相性の解析ビジュアル
 - 本ページはツール出力の機械整理であり、的中・回収を保証するものではありません
 
@@ -22,9 +22,9 @@ npx -y staticrypt@3 index.html analysis.html results.html -d .. -p "<閲覧用�
 解析ビジュアルと結果まとめは、次の順で平文ソースを生成します。
 
 ```bash
-python src/tools/extract_analysis.py 2026-11-22        # yosou_tool.html と jvlink.sqlite から JSON を抽出
-python src/tools/build_analysis.py 2026-11-22          # analysis_template.html -> src/analysis.html
-python src/tools/build_results_page.py 2026-11-22 2026-11-21   # results_template.html -> src/results.html
+python src/tools/extract_analysis.py 2026-11-23        # yosou_tool.html と jvlink.sqlite から JSON を抽出
+python src/tools/build_analysis.py 2026-11-23          # analysis_template.html -> src/analysis.html
+python src/tools/build_results_page.py 2026-11-23 2026-11-22 2026-11-21   # results_template.html -> src/results.html
 ```
 
 `build_results_page.py` は指定した日付（先頭が初期表示）の予想を埋め込みます。
@@ -53,3 +53,10 @@ git push
 
 解析ページで結果を記録すると、前走ペースマップに 1〜3着馬を通る最小二乗直線（着順線）を描き、
 式 `y = ax + b`（x=前走PCI・y=前走脚質度）をコース署名の式と並べて表示します。
+
+## ラップ経緯の「加速」印
+
+解析ページの「ラップ経緯」では、ラスト2Fが加速ラップ（最終1Fが直前の1Fより速い）だった走に
+「加速」印を付け、折れ線の該当区間を橙の太線で示します（着順は問いません）。
+さらに前の1Fから続けて加速している場合は 2区間ぶんを塗ります。
+`⤴`（勝利かつ終い加速質ラップ＝モデルのシグナル定義）とは別の印です。
